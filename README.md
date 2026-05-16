@@ -47,7 +47,8 @@ Both pipelines were evaluated against the ground-truth outputs using Cell Precis
 │   ├── summary.csv
 │   ├── sql_better_cases.csv
 │   ├── qa_better_cases.csv
-│   └── both_fail_cases.csv
+│   ├── both_fail_cases.csv
+|   └── technical_report_base.md
 └── src/
     └── text_to_SQL_vs_direct_table_QA.py
 
