@@ -1,0 +1,824 @@
+id,db_id,question,gold_sql,ground_truth,generated_sql,sql_error,sql_output,sql_precision,sql_recall,sql_cardinality,qa_raw_output,qa_error,qa_output,qa_precision,qa_recall,qa_cardinality
+0,concert_singer,How many singers do we have?,SELECT count(*) FROM singer,"[('6',)]",SELECT COUNT(*) FROM singer;,,"[('6',)]",1.0,1.0,1.0,"{
+  ""answer"": [[""6""]]
+}",,"[('6',)]",1.0,1.0,1.0
+1,concert_singer,What is the total number of singers?,SELECT count(*) FROM singer,"[('6',)]",SELECT COUNT(*) FROM singer;,,"[('6',)]",1.0,1.0,1.0,"{
+  ""answer"": [[""6""]]
+}",,"[('6',)]",1.0,1.0,1.0
+2,concert_singer,"Show name, country, age for all singers ordered by age from the oldest to the youngest.","SELECT name ,  country ,  age FROM singer ORDER BY age DESC","[('joe sharp', 'netherlands', '52'), ('john nizinik', 'france', '43'), ('justin brown', 'france', '29'), ('rose white', 'france', '41'), ('timbaland', 'united states', '32'), ('tribal king', 'france', '25')]","SELECT Name, Country, Age FROM singer ORDER BY Age DESC;",,"[('joe sharp', 'netherlands', '52'), ('john nizinik', 'france', '43'), ('justin brown', 'france', '29'), ('rose white', 'france', '41'), ('timbaland', 'united states', '32'), ('tribal king', 'france', '25')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Joe Sharp"", ""Netherlands"", 52],
+    [""Rose White"", ""France"", 41],
+    [""John Nizinik"", ""France"", 43],
+    [""Timbaland"", ""United States"", 32],
+    [""Justin Brown"", ""France"", 29],
+    [""Tribal King"", ""France"", 25]
+  ]
+}
+```",,"[('joe sharp', 'netherlands', '52'), ('john nizinik', 'france', '43'), ('justin brown', 'france', '29'), ('rose white', 'france', '41'), ('timbaland', 'united states', '32'), ('tribal king', 'france', '25')]",1.0,1.0,1.0
+3,concert_singer,"What are the names, countries, and ages for every singer in descending order of age?","SELECT name ,  country ,  age FROM singer ORDER BY age DESC","[('joe sharp', 'netherlands', '52'), ('john nizinik', 'france', '43'), ('justin brown', 'france', '29'), ('rose white', 'france', '41'), ('timbaland', 'united states', '32'), ('tribal king', 'france', '25')]","SELECT Name, Country, Age FROM singer ORDER BY Age DESC;",,"[('joe sharp', 'netherlands', '52'), ('john nizinik', 'france', '43'), ('justin brown', 'france', '29'), ('rose white', 'france', '41'), ('timbaland', 'united states', '32'), ('tribal king', 'france', '25')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Joe Sharp"", ""Netherlands"", 52],
+    [""Rose White"", ""France"", 41],
+    [""John Nizinik"", ""France"", 43],
+    [""Timbaland"", ""United States"", 32],
+    [""Justin Brown"", ""France"", 29],
+    [""Tribal King"", ""France"", 25]
+  ]
+}
+```",,"[('joe sharp', 'netherlands', '52'), ('john nizinik', 'france', '43'), ('justin brown', 'france', '29'), ('rose white', 'france', '41'), ('timbaland', 'united states', '32'), ('tribal king', 'france', '25')]",1.0,1.0,1.0
+4,concert_singer,"What is the average, minimum, and maximum age of all singers from France?","SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'","[('34.5', '25', '43')]","SELECT min(Age) ,  max(Age) ,  avg(Age) FROM singer WHERE Country = 'France'",,"[('25', '43', '34.5')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""min_age"", 25],
+    [""max_age"", 52]
+  ]
+}
+```",,"[('max_age', '52'), ('min_age', '25')]",0.25,0.3333333333333333,0.5
+5,concert_singer,"What is the average, minimum, and maximum age for all French singers?","SELECT avg(age) ,  min(age) ,  max(age) FROM singer WHERE country  =  'France'","[('34.5', '25', '43')]","SELECT MIN(Age) AS Min_Age, MAX(Age) AS Max_Age, AVG(Age) AS Avg_Age FROM singer WHERE Country = 'France'",,"[('25', '43', '34.5')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""min_age"", 25],
+    [""max_age"", 52]
+  ]
+}
+```",,"[('max_age', '52'), ('min_age', '25')]",0.25,0.3333333333333333,0.5
+6,concert_singer,Show the name and the release year of the song by the youngest singer.,"SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1","[('love', '2016')]","SELECT Song_Name, Song_release_year FROM singer ORDER BY Age ASC LIMIT 1",,"[('love', '2016')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Tribal King"", 2016]
+  ]
+}
+```",,"[('tribal king', '2016')]",0.5,0.5,1.0
+7,concert_singer,What are the names and release years for all the songs of the youngest singer?,"SELECT song_name ,  song_release_year FROM singer ORDER BY age LIMIT 1","[('love', '2016')]","SELECT Song_Name, Song_release_year FROM singer WHERE Age = (SELECT MIN(Age) FROM singer);",,"[('love', '2016')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Tribal King"", 2016]
+  ]
+}
+```",,"[('tribal king', '2016')]",0.5,0.5,1.0
+8,concert_singer,What are all distinct countries where singers above age 20 are from?,SELECT DISTINCT country FROM singer WHERE age  >  20,"[('france',), ('netherlands',), ('united states',)]",SELECT DISTINCT Country FROM singer WHERE Age > 20;,,"[('france',), ('netherlands',), ('united states',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Netherlands""],
+    [""United States""],
+    [""France""]
+  ]
+}
+```",,"[('france',), ('netherlands',), ('united states',)]",1.0,1.0,1.0
+9,concert_singer,What are  the different countries with singers above age 20?,SELECT DISTINCT country FROM singer WHERE age  >  20,"[('france',), ('netherlands',), ('united states',)]",SELECT DISTINCT Country FROM singer WHERE Age > 20;,,"[('france',), ('netherlands',), ('united states',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Netherlands""],
+    [""United States""],
+    [""France""]
+  ]
+}
+```",,"[('france',), ('netherlands',), ('united states',)]",1.0,1.0,1.0
+10,concert_singer,Show all countries and the number of singers in each country.,"SELECT country ,  count(*) FROM singer GROUP BY country","[('france', '4'), ('netherlands', '1'), ('united states', '1')]","SELECT Country, COUNT(*) FROM singer GROUP BY Country",,"[('france', '4'), ('netherlands', '1'), ('united states', '1')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Netherlands"", 1],
+    [""United States"", 1],
+    [""France"", 4]
+  ]
+}
+```",,"[('france', '4'), ('netherlands', '1'), ('united states', '1')]",1.0,1.0,1.0
+11,concert_singer,How many singers are from each country?,"SELECT country ,  count(*) FROM singer GROUP BY country","[('france', '4'), ('netherlands', '1'), ('united states', '1')]","SELECT Country, COUNT(*) FROM singer GROUP BY Country",,"[('france', '4'), ('netherlands', '1'), ('united states', '1')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Netherlands"", 1],
+    [""United States"", 1],
+    [""France"", 4]
+  ]
+}
+```",,"[('france', '4'), ('netherlands', '1'), ('united states', '1')]",1.0,1.0,1.0
+12,concert_singer,List all song names by singers above the average age.,SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer),"[('gentleman',), ('sun',), ('you',)]",SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer),,"[('gentleman',), ('sun',), ('you',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Sun""],
+    [""Gentleman""]
+  ]
+}
+```",,"[('gentleman',), ('sun',)]",1.0,0.6666666666666666,0.6666666666666666
+13,concert_singer,What are all the song names by singers who are older than average?,SELECT song_name FROM singer WHERE age  >  (SELECT avg(age) FROM singer),"[('gentleman',), ('sun',), ('you',)]",SELECT Song_Name FROM singer WHERE Age > (SELECT AVG(Age) FROM singer),,"[('gentleman',), ('sun',), ('you',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Sun""],
+    [""Gentleman""]
+  ]
+}
+```",,"[('gentleman',), ('sun',)]",1.0,0.6666666666666666,0.6666666666666666
+14,concert_singer,Show location and name for all stadiums with a capacity between 5000 and 10000.,"SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000",[],"SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000;",,[],1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Queen's Park"", ""Hampden Park""]
+  ]
+}
+```",,"[(""queen's park"", 'hampden park')]",0.0,0.0,0.0
+15,concert_singer,What are the locations and names of all stations with capacity between 5000 and 10000?,"SELECT LOCATION ,  name FROM stadium WHERE capacity BETWEEN 5000 AND 10000",[],"SELECT Location, Name FROM stadium WHERE Capacity BETWEEN 5000 AND 10000;",,[],1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Queen's Park"", ""Hampden Park""]
+  ]
+}
+```",,"[(""queen's park"", 'hampden park')]",0.0,0.0,0.0
+16,concert_singer,What is the average and the maximum capacity of all stadiums?,"SELECT avg(capacity) ,  max(capacity) FROM stadium","[('10621.666667', '52500')]","SELECT AVG(Capacity) AS Avg_Capacity, MAX(Capacity) AS Max_Capacity FROM stadium;",,"[('10621.666667', '52500')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Average Capacity"", ""Maximum Capacity""],
+    [13000.0, 52500]
+  ]
+}
+```",,"[('13000', '52500'), ('average capacity', 'maximum capacity')]",0.25,0.5,0.5
+17,concert_singer,What is the average and maximum capacities for all stations?,"SELECT avg(capacity) ,  max(capacity) FROM stadium","[('10621.666667', '52500')]","SELECT AVG(Capacity) AS Avg_Capacity, MAX(Capacity) AS Max_Capacity FROM stadium;",,"[('10621.666667', '52500')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Average"", ""52500""],
+    [""Highest"", ""52500""]
+  ]
+}
+```",,"[('average', '52500'), ('highest', '52500')]",0.25,0.5,0.5
+18,concert_singer,What is the name and capacity for the stadium with highest average attendance?,"SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1","[(""stark's park"", '10104')]","SELECT Name, Capacity FROM stadium ORDER BY Average DESC LIMIT 1",,"[(""stark's park"", '10104')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Hampden Park"", ""52500""]
+  ]
+}
+```",,"[('hampden park', '52500')]",0.0,0.0,1.0
+19,concert_singer,What is the name and capacity for the stadium with the highest average attendance?,"SELECT name ,  capacity FROM stadium ORDER BY average DESC LIMIT 1","[(""stark's park"", '10104')]","SELECT Name, Capacity FROM stadium ORDER BY Average DESC LIMIT 1",,"[(""stark's park"", '10104')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Hampden Park"", ""52500""]
+  ]
+}
+```",,"[('hampden park', '52500')]",0.0,0.0,1.0
+20,concert_singer,How many concerts are there in year 2014 or 2015?,SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015,"[('6',)]","SELECT COUNT(*) FROM concert WHERE Year IN ('2014', '2015')",,"[('6',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""count"", ""2""]
+  ]
+}
+```",,"[('count', '2')]",0.0,0.0,1.0
+21,concert_singer,How many concerts occurred in 2014 or 2015?,SELECT count(*) FROM concert WHERE YEAR  =  2014 OR YEAR  =  2015,"[('6',)]","SELECT COUNT(*) FROM concert WHERE Year IN ('2014', '2015')",,"[('6',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""count"", ""2""]
+  ]
+}
+```",,"[('count', '2')]",0.0,0.0,1.0
+22,concert_singer,Show the stadium name and the number of concerts in each stadium.,"SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id","[('balmoor', '1'), ('glebe park', '1'), ('recreation park', '1'), ('somerset park', '2'), (""stark's park"", '1')]","SELECT T2.Name, COUNT(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID GROUP BY T2.Name",,"[('balmoor', '1'), ('glebe park', '1'), ('recreation park', '1'), ('somerset park', '2'), (""stark's park"", '1')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Stark's Park"", 2],
+    [""Somerset Park"", 1],
+    [""Recreation Park"", 1]
+  ]
+}
+```",,"[('recreation park', '1'), ('somerset park', '1'), (""stark's park"", '2')]",1.0,0.6,0.6
+23,concert_singer,"For each stadium, how many concerts play there?","SELECT T2.name ,  count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id GROUP BY T1.stadium_id","[('balmoor', '1'), ('glebe park', '1'), ('recreation park', '1'), ('somerset park', '2'), (""stark's park"", '1')]","SELECT T2.Name, COUNT(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID GROUP BY T2.Name",,"[('balmoor', '1'), ('glebe park', '1'), ('recreation park', '1'), ('somerset park', '2'), (""stark's park"", '1')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Stark's Park"", 2],
+    [""Somerset Park"", 1],
+    [""Balmoor"", 1]
+  ]
+}
+```",,"[('balmoor', '1'), ('somerset park', '1'), (""stark's park"", '2')]",1.0,0.6,0.6
+24,concert_singer,Show the stadium name and capacity with most number of concerts in year 2014 or after.,"SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1","[('somerset park', '11998')]","SELECT T2.Name, T2.Capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Year >= '2014' GROUP BY T2.Stadium_ID ORDER BY COUNT(*) DESC LIMIT 1",,"[('somerset park', '11998')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Stark's Park"", 10104],
+    [""Somerset Park"", 11998]
+  ]
+}
+```",,"[('somerset park', '11998'), (""stark's park"", '10104')]",0.5,1.0,0.5
+25,concert_singer,What is the name and capacity of the stadium  with the most concerts after 2013?,"SELECT T2.name ,  T2.capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  >=  2014 GROUP BY T2.stadium_id ORDER BY count(*) DESC LIMIT 1","[('somerset park', '11998')]","SELECT T2.Name, T2.Capacity FROM concert AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Year > '2013' GROUP BY T2.Stadium_ID ORDER BY COUNT(*) DESC LIMIT 1",,"[('somerset park', '11998')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Somerset Park"", ""11998""]
+  ]
+}
+```",,"[('somerset park', '11998')]",1.0,1.0,1.0
+26,concert_singer,Which year has most number of concerts?,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,"[('2015',)]",SELECT YEAR FROM concert GROUP BY YEAR ORDER BY COUNT(*) DESC LIMIT 1,,"[('2015',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""2015""]
+  ]
+}
+```",,"[('2015',)]",1.0,1.0,1.0
+27,concert_singer,What is the year that had the most concerts?,SELECT YEAR FROM concert GROUP BY YEAR ORDER BY count(*) DESC LIMIT 1,"[('2015',)]",SELECT YEAR FROM concert GROUP BY YEAR ORDER BY COUNT(*) DESC LIMIT 1,,"[('2015',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""2015""]
+  ]
+}
+```",,"[('2015',)]",1.0,1.0,1.0
+28,concert_singer,Show the stadium names without any concert.,SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert),"[('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',)]",SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert),,"[('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Bayview Stadium""],
+    [""Hampden Park""],
+    [""Forthbank Stadium""],
+    [""Gayfield Park""],
+    [""Recreation Park""],
+    [""Balmoor""],
+    [""Glebe Park""]
+  ]
+}
+```",,"[('balmoor',), ('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('glebe park',), ('hampden park',), ('recreation park',)]",0.5714285714285714,1.0,0.5714285714285714
+29,concert_singer,What are the names of the stadiums without any concerts?,SELECT name FROM stadium WHERE stadium_id NOT IN (SELECT stadium_id FROM concert),"[('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',)]",SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert),,"[('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""East Fife"", ""Bayview Stadium""],
+    [""Queen's Park"", ""Hampden Park""],
+    [""Stirling Albion"", ""Forthbank Stadium""],
+    [""Arbroath"", ""Gayfield Park""],
+    [""Alloa Athletic"", ""Recreation Park""],
+    [""Peterhead"", ""Balmoor""],
+    [""Brechin City"", ""Glebe Park""]
+  ]
+}
+```",,"[('alloa athletic', 'recreation park'), ('arbroath', 'gayfield park'), ('brechin city', 'glebe park'), ('east fife', 'bayview stadium'), ('peterhead', 'balmoor'), (""queen's park"", 'hampden park'), ('stirling albion', 'forthbank stadium')]",0.2857142857142857,1.0,0.5714285714285714
+30,concert_singer,Show countries where a singer above age 40 and a singer below 30 are from.,SELECT country FROM singer WHERE age  >  40 INTERSECT SELECT country FROM singer WHERE age  <  30,"[('france',)]",SELECT Country FROM singer WHERE Age > 40 INTERSECT SELECT Country FROM singer WHERE Age < 30,,"[('france',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""France""]
+  ]
+}
+```",,"[('france',)]",1.0,1.0,1.0
+31,concert_singer,Show names for all stadiums except for stadiums having a concert in year 2014.,SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014,"[('balmoor',), ('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',), ('recreation park',)]",SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = '2014'),,"[('balmoor',), ('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',), ('recreation park',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""East Fife"", ""Bayview Stadium""],
+    [""Queen's Park"", ""Hampden Park""],
+    [""Stirling Albion"", ""Forthbank Stadium""],
+    [""Arbroath"", ""Gayfield Park""],
+    [""Alloa Athletic"", ""Recreation Park""],
+    [""Peterhead"", ""Balmoor""],
+    [""Brechin City"", ""Glebe Park""]
+  ]
+}
+```",,"[('alloa athletic', 'recreation park'), ('arbroath', 'gayfield park'), ('brechin city', 'glebe park'), ('east fife', 'bayview stadium'), ('peterhead', 'balmoor'), (""queen's park"", 'hampden park'), ('stirling albion', 'forthbank stadium')]",0.42857142857142855,1.0,0.8571428571428571
+32,concert_singer,What are the names of all stadiums that did not have a concert in 2014?,SELECT name FROM stadium EXCEPT SELECT T2.name FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.year  =  2014,"[('balmoor',), ('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',), ('recreation park',)]",SELECT Name FROM stadium WHERE Stadium_ID NOT IN (SELECT Stadium_ID FROM concert WHERE Year = '2014'),,"[('balmoor',), ('bayview stadium',), ('forthbank stadium',), ('gayfield park',), ('hampden park',), ('recreation park',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""East Fife"", ""Bayview Stadium""],
+    [""Queen's Park"", ""Hampden Park""],
+    [""Stirling Albion"", ""Forthbank Stadium""],
+    [""Arbroath"", ""Gayfield Park""],
+    [""Alloa Athletic"", ""Recreation Park""],
+    [""Peterhead"", ""Balmoor""],
+    [""Brechin City"", ""Glebe Park""]
+  ]
+}
+```",,"[('alloa athletic', 'recreation park'), ('arbroath', 'gayfield park'), ('brechin city', 'glebe park'), ('east fife', 'bayview stadium'), ('peterhead', 'balmoor'), (""queen's park"", 'hampden park'), ('stirling albion', 'forthbank stadium')]",0.42857142857142855,1.0,0.8571428571428571
+33,concert_singer,Show the name and theme for all concerts and the number of singers in each concert.,"SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id","[('auditions', 'free choice', '3'), ('home visits', 'bleeding love', '1'), ('super bootcamp', 'free choice 2', '2'), ('week 1', 'happy tonight', '2'), ('week 1', 'wide awake', '1'), ('week 2', 'party all night', '1')]","SELECT c.concert_Name, c.Theme, COUNT(sc.Singer_ID) AS Number_of_Singers 
+FROM concert c 
+LEFT JOIN singer_in_concert sc ON c.concert_ID = sc.concert_ID 
+GROUP BY c.concert_ID;",,"[('auditions', 'free choice', '3'), ('home visits', 'bleeding love', '1'), ('super bootcamp', 'free choice 2', '2'), ('week 1', 'happy tonight', '2'), ('week 1', 'wide awake', '1'), ('week 2', 'party all night', '1')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Auditions"", ""Free choice"", 3],
+    [""Super bootcamp"", ""Free choice 2"", 2],
+    [""Home Visits"", ""Bleeding Love"", 1],
+    [""Week 1"", ""Wide Awake"", 1],
+    [""Week 1"", ""Happy Tonight"", 2],
+    [""Week 2"", ""Party All Night"", 1]
+  ]
+}
+```",,"[('auditions', 'free choice', '3'), ('home visits', 'bleeding love', '1'), ('super bootcamp', 'free choice 2', '2'), ('week 1', 'happy tonight', '2'), ('week 1', 'wide awake', '1'), ('week 2', 'party all night', '1')]",1.0,1.0,1.0
+34,concert_singer,"What are the names, themes, and number of singers for each and every concert?","SELECT T2.concert_name ,  T2.theme ,  count(*) FROM singer_in_concert AS T1 JOIN concert AS T2 ON T1.concert_id  =  T2.concert_id GROUP BY T2.concert_id","[('auditions', 'free choice', '3'), ('home visits', 'bleeding love', '1'), ('super bootcamp', 'free choice 2', '2'), ('week 1', 'happy tonight', '2'), ('week 1', 'wide awake', '1'), ('week 2', 'party all night', '1')]","SELECT T1.concert_Name, T1.Theme, COUNT(T2.Singer_ID) AS Number_of_Singers FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID GROUP BY T1.concert_ID;",,"[('auditions', 'free choice', '3'), ('home visits', 'bleeding love', '1'), ('super bootcamp', 'free choice 2', '2'), ('week 1', 'happy tonight', '2'), ('week 1', 'wide awake', '1'), ('week 2', 'party all night', '1')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Auditions"", ""Free choice"", 3],
+    [""Super bootcamp"", ""Free choice 2"", 2],
+    [""Home Visits"", ""Bleeding Love"", 1],
+    [""Week 1"", ""Wide Awake"", 1],
+    [""Week 1"", ""Happy Tonight"", 2],
+    [""Week 2"", ""Party All Night"", 1]
+  ]
+}
+```",,"[('auditions', 'free choice', '3'), ('home visits', 'bleeding love', '1'), ('super bootcamp', 'free choice 2', '2'), ('week 1', 'happy tonight', '2'), ('week 1', 'wide awake', '1'), ('week 2', 'party all night', '1')]",1.0,1.0,1.0
+35,concert_singer,List singer names and number of concerts for each singer.,"SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id","[('john nizinik', '2'), ('justin brown', '3'), ('rose white', '1'), ('timbaland', '2'), ('tribal king', '2')]","SELECT s.Name, COUNT(si.concert_ID) AS Number_of_Concerts FROM singer s JOIN singer_in_concert si ON s.Singer_ID = si.Singer_ID GROUP BY s.Name;",,"[('john nizinik', '2'), ('justin brown', '3'), ('rose white', '1'), ('timbaland', '2'), ('tribal king', '2')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Joe Sharp"", 0],
+    [""Timbaland"", 2],
+    [""Justin Brown"", 3],
+    [""Rose White"", 1],
+    [""John Nizinik"", 2],
+    [""Tribal King"", 2]
+  ]
+}
+```",,"[('joe sharp', '0'), ('john nizinik', '2'), ('justin brown', '3'), ('rose white', '1'), ('timbaland', '2'), ('tribal king', '2')]",0.8333333333333334,1.0,0.8333333333333334
+36,concert_singer,What are the names of the singers and number of concerts for each person?,"SELECT T2.name ,  count(*) FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id GROUP BY T2.singer_id","[('john nizinik', '2'), ('justin brown', '3'), ('rose white', '1'), ('timbaland', '2'), ('tribal king', '2')]","SELECT T1.Name, COUNT(T2.concert_ID) as Number_of_Concerts FROM singer AS T1 JOIN singer_in_concert AS T2 ON T1.Singer_ID = T2.Singer_ID GROUP BY T1.Name",,"[('john nizinik', '2'), ('justin brown', '3'), ('rose white', '1'), ('timbaland', '2'), ('tribal king', '2')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Joe Sharp"", 0],
+    [""Timbaland"", 2],
+    [""Justin Brown"", 3],
+    [""Rose White"", 1],
+    [""John Nizinik"", 2],
+    [""Tribal King"", 2]
+  ]
+}
+```",,"[('joe sharp', '0'), ('john nizinik', '2'), ('justin brown', '3'), ('rose white', '1'), ('timbaland', '2'), ('tribal king', '2')]",0.8333333333333334,1.0,0.8333333333333334
+37,concert_singer,List all singer names in concerts in year 2014.,SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014,"[('john nizinik',), ('justin brown',), ('justin brown',), ('rose white',), ('timbaland',), ('tribal king',)]",SELECT T3.Name FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID JOIN singer AS T3 ON T2.Singer_ID = T3.Singer_ID WHERE T1.Year = '2014',,"[('john nizinik',), ('justin brown',), ('justin brown',), ('rose white',), ('timbaland',), ('tribal king',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Timbaland""],
+    [""Justin Brown""],
+    [""Rose White""],
+    [""Joe Sharp""]
+  ]
+}
+```",,"[('joe sharp',), ('justin brown',), ('rose white',), ('timbaland',)]",0.75,0.5,0.6666666666666666
+38,concert_singer,What are the names of the singers who performed in a concert in 2014?,SELECT T2.name FROM singer_in_concert AS T1 JOIN singer AS T2 ON T1.singer_id  =  T2.singer_id JOIN concert AS T3 ON T1.concert_id  =  T3.concert_id WHERE T3.year  =  2014,"[('john nizinik',), ('justin brown',), ('justin brown',), ('rose white',), ('timbaland',), ('tribal king',)]",SELECT T3.Name FROM concert AS T1 JOIN singer_in_concert AS T2 ON T1.concert_ID = T2.concert_ID JOIN singer AS T3 ON T2.Singer_ID = T3.Singer_ID WHERE T1.Year = '2014',,"[('john nizinik',), ('justin brown',), ('justin brown',), ('rose white',), ('timbaland',), ('tribal king',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Timbaland""],
+    [""Justin Brown""],
+    [""Rose White""]
+  ]
+}
+```",,"[('justin brown',), ('rose white',), ('timbaland',)]",1.0,0.5,0.5
+39,concert_singer,what is the name and nation of the singer who have a song having 'Hey' in its name?,"SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'","[('justin brown', 'france')]","SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'",,"[('justin brown', 'france')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Justin Brown"", ""France""]
+  ]
+}
+```",,"[('justin brown', 'france')]",1.0,1.0,1.0
+40,concert_singer,What is the name and country of origin of every singer who has a song with the word 'Hey' in its title?,"SELECT name ,  country FROM singer WHERE song_name LIKE '%Hey%'","[('justin brown', 'france')]","SELECT Name, Country FROM singer WHERE Song_Name LIKE '%Hey%'",,"[('justin brown', 'france')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Justin Brown"", ""France""]
+  ]
+}
+```",,"[('justin brown', 'france')]",1.0,1.0,1.0
+41,concert_singer,Find the name and location of the stadiums which some concerts happened in the years of both 2014 and 2015.,"SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015","[('somerset park', 'ayr united')]","SELECT T2.Name, T2.Location FROM concert AS T1 JOIN stadium AS T2 ON T1.Stadium_ID = T2.Stadium_ID WHERE T1.Year IN ('2014', '2015') GROUP BY T2.Stadium_ID HAVING COUNT(DISTINCT T1.Year) > 1",,"[('somerset park', 'ayr united')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Somerset Park"", ""Ayr United""],
+    [""Glebe Park"", ""Brechin City""]
+  ]
+}
+```",,"[('glebe park', 'brechin city'), ('somerset park', 'ayr united')]",0.5,1.0,0.5
+42,concert_singer,What are the names and locations of the stadiums that had concerts that occurred in both 2014 and 2015?,"SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2014 INTERSECT SELECT T2.name ,  T2.location FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id WHERE T1.Year  =  2015","[('somerset park', 'ayr united')]","SELECT s.Name, s.Location FROM stadium s WHERE s.Stadium_ID IN (SELECT c.Stadium_ID FROM concert c WHERE c.Year = '2014') AND s.Stadium_ID IN (SELECT c.Stadium_ID FROM concert c WHERE c.Year = '2015')",,"[('somerset park', 'ayr united')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Somerset Park"", ""Ayr United""],
+    [""Glebe Park"", ""Brechin City""]
+  ]
+}
+```",,"[('glebe park', 'brechin city'), ('somerset park', 'ayr united')]",0.5,1.0,0.5
+43,concert_singer,Find the number of concerts happened in the stadium with the highest capacity.,SELECT count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id ORDER BY T2.Capacity DESC LIMIT 1,"[('6',)]",SELECT COUNT(*) FROM concert AS c JOIN stadium AS s ON c.Stadium_ID = s.Stadium_ID WHERE s.Capacity = (SELECT MAX(Capacity) FROM stadium),,"[('0',)]",0.0,0.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+44,concert_singer,What are the number of concerts that occurred in the stadium with the largest capacity?,SELECT count(*) FROM concert AS T1 JOIN stadium AS T2 ON T1.stadium_id  =  T2.stadium_id ORDER BY T2.Capacity DESC LIMIT 1,"[('6',)]",SELECT COUNT(*) FROM concert WHERE Stadium_ID = (SELECT Stadium_ID FROM stadium ORDER BY Capacity DESC LIMIT 1),,"[('0',)]",0.0,0.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+45,pets_1,Find the number of pets whose weight is heavier than 10.,SELECT count(*) FROM pets WHERE weight  >  10,"[('2',)]",SELECT COUNT(*) FROM Pets WHERE weight > 10;,,"[('2',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""PetID"", ""PetType"", ""pet_age"", ""weight""],
+    [2001, ""cat"", 3, 12],
+    [2002, ""dog"", 2, 13.4]
+  ]
+}
+```",,"[('2001', 'cat', '3', '12'), ('2002', 'dog', '2', '13.4'), ('petid', 'pettype', 'pet_age', 'weight')]",0.08333333333333333,1.0,0.3333333333333333
+46,pets_1,How many pets have a greater weight than 10?,SELECT count(*) FROM pets WHERE weight  >  10,"[('2',)]",SELECT COUNT(*) FROM Pets WHERE weight > 10;,,"[('2',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""PetID"", ""weight""],
+    [2001, 12],
+    [2002, 13.4]
+  ]
+}
+```",,"[('2001', '12'), ('2002', '13.4'), ('petid', 'weight')]",0.0,0.0,0.3333333333333333
+47,pets_1,Find the weight of the youngest dog.,SELECT weight FROM pets ORDER BY pet_age LIMIT 1,"[('9.3',)]",SELECT weight FROM Pets WHERE PetType = 'dog' ORDER BY pet_age ASC LIMIT 1,,"[('9.3',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""weight""],
+    [9.3]
+  ]
+}
+```",,"[('9.3',), ('weight',)]",0.5,1.0,0.5
+48,pets_1,How much does the youngest dog weigh?,SELECT weight FROM pets ORDER BY pet_age LIMIT 1,"[('9.3',)]",SELECT MIN(weight) FROM Pets WHERE PetType = 'dog';,,"[('9.3',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""weight""],
+    [9.3]
+  ]
+}
+```",,"[('9.3',), ('weight',)]",0.5,1.0,0.5
+49,pets_1,Find the maximum weight for each type of pet. List the maximum weight and pet type.,"SELECT max(weight) ,  petType FROM pets GROUP BY petType","[('12', 'cat'), ('13.4', 'dog')]","SELECT PetType, MAX(weight) AS MaxWeight FROM Pets GROUP BY PetType;",,"[('cat', '12'), ('dog', '13.4')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""cat"", 12],
+    [""dog"", 13.4]
+  ]
+}
+```",,"[('cat', '12'), ('dog', '13.4')]",1.0,1.0,1.0
+50,pets_1,List the maximum weight and type for each type of pet.,"SELECT max(weight) ,  petType FROM pets GROUP BY petType","[('12', 'cat'), ('13.4', 'dog')]","SELECT PetType, MAX(weight) FROM Pets GROUP BY PetType;",,"[('cat', '12'), ('dog', '13.4')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""cat"", 12],
+    [""dog"", 13.4]
+  ]
+}
+```",,"[('cat', '12'), ('dog', '13.4')]",1.0,1.0,1.0
+51,pets_1,Find number of pets owned by students who are older than 20.,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20,"[('0',)]",SELECT COUNT(*) FROM Has_Pet AS HP JOIN Student AS S ON HP.StuID = S.StuID WHERE S.Age > 20;,,"[('0',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+52,pets_1,How many pets are owned by students that have an age greater than 20?,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.age  >  20,"[('0',)]",SELECT COUNT(*) FROM Has_Pet AS HP JOIN Student AS S ON HP.StuID = S.StuID WHERE S.Age > 20;,,"[('0',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+53,pets_1,Find the number of dog pets that are raised by female students (with sex F).,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog',"[('2',)]",SELECT COUNT(*) FROM Has_Pet AS HP JOIN Pets AS P ON HP.PetID = P.PetID JOIN Student AS S ON HP.StuID = S.StuID WHERE P.PetType = 'dog' AND S.Sex = 'F';,,"[('2',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+54,pets_1,How many dog pets are raised by female students?,SELECT count(*) FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T2.petid  =  T3.petid WHERE T1.sex  =  'F' AND T3.pettype  =  'dog',"[('2',)]",SELECT COUNT(*) FROM Has_Pet AS HP JOIN Pets AS P ON HP.PetID = P.PetID JOIN Student AS S ON HP.StuID = S.StuID WHERE P.PetType = 'dog' AND S.Sex = 'F';,,"[('2',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+55,pets_1,Find the number of distinct type of pets.,SELECT count(DISTINCT pettype) FROM pets,"[('2',)]",SELECT COUNT(DISTINCT PetType) FROM Pets;,,"[('2',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""PetType""],
+    [""cat"", ""dog""]
+  ]
+}
+```",,"[('cat', 'dog'), ('pettype',)]",0.0,0.0,0.5
+56,pets_1,How many different types of pet are there?,SELECT count(DISTINCT pettype) FROM pets,"[('2',)]",SELECT COUNT(DISTINCT PetType) FROM Pets;,,"[('2',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""PetType""],
+    [""cat"", ""dog""]
+  ]
+}
+```",,"[('cat', 'dog'), ('pettype',)]",0.0,0.0,0.5
+57,pets_1,Find the first name of students who have cat or dog pet.,SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog',"[('linda',), ('tracy',)]","SELECT T1.Fname FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetType IN ('cat', 'dog')",,"[('linda',), ('tracy',), ('tracy',)]",0.6666666666666666,1.0,0.6666666666666666,"```json
+{
+  ""answer"": [
+    [""Linda""],
+    [""Tracy""],
+    [""Shiela""],
+    [""Dinesh""],
+    [""Paul""],
+    [""Andy""],
+    [""Lisa""],
+    [""Jandy""],
+    [""Eric""],
+    [""David""],
+    [""Steven""],
+    [""Charles""],
+    [""Susan""],
+    [""Michael""],
+    [""Ian""],
+    [""Arthur""],
+    [""Mark""],
+    [""George""],
+    [""Michael""],
+    [""David""],
+    [""Stacy""],
+    [""Mark""],
+    [""Jun""],
+    [""Lisa""],
+    [""Sarah""]
+  ]
+}
+```",,"[('andy',), ('arthur',), ('charles',), ('david',), ('david',), ('dinesh',), ('eric',), ('george',), ('ian',), ('jandy',), ('jun',), ('linda',), ('lisa',), ('lisa',), ('mark',), ('mark',), ('michael',), ('michael',), ('paul',), ('sarah',), ('shiela',), ('stacy',), ('steven',), ('susan',), ('tracy',)]",0.08,1.0,0.08
+58,pets_1,What are the first names of every student who has a cat or dog as a pet?,SELECT DISTINCT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' OR T3.pettype  =  'dog',"[('linda',), ('tracy',)]","SELECT DISTINCT T1.Fname FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetType IN ('cat', 'dog')",,"[('linda',), ('tracy',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Linda""],
+    [""Tracy""],
+    [""Shiela""],
+    [""Dinesh""],
+    [""Paul""],
+    [""Andy""],
+    [""Lisa""],
+    [""Jandy""],
+    [""Eric""],
+    [""Derek""],
+    [""David""],
+    [""Steven""],
+    [""Charles""],
+    [""Susan""],
+    [""Mark""],
+    [""Bruce""],
+    [""Michael""],
+    [""Arthur""],
+    [""Ian""],
+    [""George""],
+    [""Michael""],
+    [""David""],
+    [""Stacy""],
+    [""Mark""],
+    [""Eric""],
+    [""Paul""],
+    [""Eric""],
+    [""Jun""],
+    [""Lisa""],
+    [""Sarah""]
+  ]
+}
+```",,"[('andy',), ('arthur',), ('bruce',), ('charles',), ('david',), ('david',), ('derek',), ('dinesh',), ('eric',), ('eric',), ('eric',), ('george',), ('ian',), ('jandy',), ('jun',), ('linda',), ('lisa',), ('lisa',), ('mark',), ('mark',), ('michael',), ('michael',), ('paul',), ('paul',), ('sarah',), ('shiela',), ('stacy',), ('steven',), ('susan',), ('tracy',)]",0.06666666666666667,1.0,0.06666666666666667
+59,pets_1,Find the name of students who have both cat and dog pets.,SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog',[],"SELECT T1.Fname, T1.Lname FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetType IN ('cat', 'dog') GROUP BY T1.StuID HAVING COUNT(DISTINCT T3.PetType) > 1",,[],1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Tracy Kim""]
+  ]
+}
+```",,"[('tracy kim',)]",0.0,0.0,0.0
+60,pets_1,What are the students' first names who have both cats and dogs as pets?,SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat' INTERSECT SELECT T1.Fname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog',[],"SELECT T1.Fname FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetType IN ('cat', 'dog') GROUP BY T1.StuID HAVING COUNT(DISTINCT T3.PetType) > 1",,[],1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Tracy""]
+  ]
+}
+```",,"[('tracy',)]",0.0,0.0,0.0
+61,pets_1,Find the major and age of students who do not have a cat pet.,"SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')","[('100', '17'), ('50', '18'), ('50', '26'), ('520', '18'), ('520', '18'), ('520', '19'), ('520', '19'), ('520', '20'), ('520', '22'), ('540', '17'), ('540', '18'), ('550', '18'), ('550', '20'), ('550', '20'), ('550', '20'), ('550', '21'), ('600', '16'), ('600', '17'), ('600', '17'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '19'), ('600', '19'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '21'), ('600', '22'), ('600', '26'), ('600', '27')]","SELECT T1.Major, T1.Age FROM Student AS T1 LEFT JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID WHERE T2.PetID IS NULL AND NOT EXISTS (SELECT 1 FROM Pets AS T3 WHERE T3.PetID = T2.PetID AND T3.PetType = 'cat')",,"[('100', '17'), ('50', '18'), ('50', '26'), ('520', '18'), ('520', '18'), ('520', '19'), ('520', '19'), ('520', '20'), ('520', '22'), ('540', '17'), ('540', '18'), ('550', '18'), ('550', '20'), ('550', '20'), ('550', '20'), ('550', '21'), ('600', '16'), ('600', '17'), ('600', '17'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '19'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '21'), ('600', '22'), ('600', '26'), ('600', '27')]",1.0,0.9696969696969697,0.9696969696969697,"```json
+{
+  ""answer"": [
+    [""600"", ""18""],
+    [""600"", ""19""],
+    [""600"", ""20""],
+    [""600"", ""21""],
+    [""600"", ""22""],
+    [""600"", ""26""],
+    [""600"", ""17""],
+    [""600"", ""16""],
+    [""600"", ""27""],
+    [""520"", ""18""],
+    [""520"", ""19""],
+    [""520"", ""20""],
+    [""520"", ""17""],
+    [""520"", ""18""],
+    [""520"", ""19""],
+    [""520"", ""18""],
+    [""550"", ""17""],
+    [""550"", ""21""]
+  ]
+}
+```",,"[('520', '17'), ('520', '18'), ('520', '18'), ('520', '18'), ('520', '19'), ('520', '19'), ('520', '20'), ('550', '17'), ('550', '21'), ('600', '16'), ('600', '17'), ('600', '18'), ('600', '19'), ('600', '20'), ('600', '21'), ('600', '22'), ('600', '26'), ('600', '27')]",0.9722222222222222,0.5303030303030303,0.5454545454545454
+62,pets_1,"What major is every student who does not own a cat as a pet, and also how old are they?","SELECT major ,  age FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')","[('100', '17'), ('50', '18'), ('50', '26'), ('520', '18'), ('520', '18'), ('520', '19'), ('520', '19'), ('520', '20'), ('520', '22'), ('540', '17'), ('540', '18'), ('550', '18'), ('550', '20'), ('550', '20'), ('550', '20'), ('550', '21'), ('600', '16'), ('600', '17'), ('600', '17'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '19'), ('600', '19'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '21'), ('600', '22'), ('600', '26'), ('600', '27')]","SELECT T1.Major, T1.Age FROM Student AS T1 WHERE T1.StuID NOT IN (SELECT StuID FROM Has_Pet AS T2 JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetType = 'cat')",,"[('100', '17'), ('50', '18'), ('50', '26'), ('520', '18'), ('520', '18'), ('520', '19'), ('520', '19'), ('520', '20'), ('520', '22'), ('540', '17'), ('540', '18'), ('550', '18'), ('550', '20'), ('550', '20'), ('550', '20'), ('550', '21'), ('600', '16'), ('600', '17'), ('600', '17'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '18'), ('600', '19'), ('600', '19'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '20'), ('600', '21'), ('600', '22'), ('600', '26'), ('600', '27')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""600"", ""18""],
+    [""600"", ""19""],
+    [""600"", ""20""],
+    [""600"", ""21""],
+    [""600"", ""22""],
+    [""600"", ""27""]
+  ]
+}
+```",,"[('600', '18'), ('600', '19'), ('600', '20'), ('600', '21'), ('600', '22'), ('600', '27')]",1.0,0.18181818181818182,0.18181818181818182
+63,pets_1,Find the id of students who do not have a cat pet.,SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat',"[('1002',), ('1003',), ('1004',), ('1005',), ('1006',), ('1007',), ('1008',), ('1009',), ('1010',), ('1011',), ('1012',), ('1014',), ('1015',), ('1016',), ('1017',), ('1018',), ('1019',), ('1020',), ('1021',), ('1022',), ('1023',), ('1024',), ('1025',), ('1026',), ('1027',), ('1028',), ('1029',), ('1030',), ('1031',), ('1032',), ('1033',), ('1034',), ('1035',)]",SELECT StuID FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE PetType = 'cat'),,"[('1002',), ('1003',), ('1004',), ('1005',), ('1006',), ('1007',), ('1008',), ('1009',), ('1010',), ('1011',), ('1012',), ('1014',), ('1015',), ('1016',), ('1017',), ('1018',), ('1019',), ('1020',), ('1021',), ('1022',), ('1023',), ('1024',), ('1025',), ('1026',), ('1027',), ('1028',), ('1029',), ('1030',), ('1031',), ('1032',), ('1033',), ('1034',), ('1035',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [1003],
+    [1004],
+    [1005],
+    [1006],
+    [1007],
+    [1008],
+    [1009],
+    [1010],
+    [1011],
+    [1012],
+    [1013],
+    [1014],
+    [1015],
+    [1016],
+    [1017],
+    [1018],
+    [1019],
+    [1020],
+    [1021],
+    [1022],
+    [1023],
+    [1024],
+    [1025],
+    [1026],
+    [1027],
+    [1028],
+    [1029],
+    [1030],
+    [1031]
+  ]
+}
+```",,"[('1003',), ('1004',), ('1005',), ('1006',), ('1007',), ('1008',), ('1009',), ('1010',), ('1011',), ('1012',), ('1013',), ('1014',), ('1015',), ('1016',), ('1017',), ('1018',), ('1019',), ('1020',), ('1021',), ('1022',), ('1023',), ('1024',), ('1025',), ('1026',), ('1027',), ('1028',), ('1029',), ('1030',), ('1031',)]",0.9655172413793104,0.8484848484848485,0.8787878787878788
+64,pets_1,What are the ids of the students who do not own cats as pets?,SELECT stuid FROM student EXCEPT SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat',"[('1002',), ('1003',), ('1004',), ('1005',), ('1006',), ('1007',), ('1008',), ('1009',), ('1010',), ('1011',), ('1012',), ('1014',), ('1015',), ('1016',), ('1017',), ('1018',), ('1019',), ('1020',), ('1021',), ('1022',), ('1023',), ('1024',), ('1025',), ('1026',), ('1027',), ('1028',), ('1029',), ('1030',), ('1031',), ('1032',), ('1033',), ('1034',), ('1035',)]",SELECT StuID FROM Has_Pet WHERE StuID NOT IN (SELECT StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE PetType = 'cat'),,"[('1002',), ('1002',)]",0.5,0.030303030303030304,0.06060606060606061,"```json
+{
+  ""answer"": [
+    [1003],
+    [1004],
+    [1005],
+    [1006],
+    [1007],
+    [1008],
+    [1009],
+    [1010],
+    [1011],
+    [1012],
+    [1013],
+    [1014],
+    [1015],
+    [1016],
+    [1017],
+    [1018],
+    [1019],
+    [1020],
+    [1021],
+    [1022],
+    [1023],
+    [1024],
+    [1025],
+    [1026],
+    [1027],
+    [1028],
+    [1029],
+    [1030],
+    [1031]
+  ]
+}
+```",,"[('1003',), ('1004',), ('1005',), ('1006',), ('1007',), ('1008',), ('1009',), ('1010',), ('1011',), ('1012',), ('1013',), ('1014',), ('1015',), ('1016',), ('1017',), ('1018',), ('1019',), ('1020',), ('1021',), ('1022',), ('1023',), ('1024',), ('1025',), ('1026',), ('1027',), ('1028',), ('1029',), ('1030',), ('1031',)]",0.9655172413793104,0.8484848484848485,0.8787878787878788
+65,pets_1,Find the first name and age of students who have a dog but do not have a cat as a pet.,"SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')","[('tracy', '19'), ('tracy', '19')]","SELECT T1.Fname, T1.Age FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T2.PetID = T3.PetID WHERE T3.PetType = 'dog' AND T1.StuID NOT IN (SELECT StuID FROM Has_Pet JOIN Pets ON Has_Pet.PetID = Pets.PetID WHERE Pets.PetType = 'cat')",,"[('tracy', '19'), ('tracy', '19')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Tracy"", 19],
+    [""Susan"", 16]
+  ]
+}
+```",,"[('susan', '16'), ('tracy', '19')]",0.5,0.5,1.0
+66,pets_1,What is the first name of every student who has a dog but does not have a cat?,"SELECT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'dog' AND T1.stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pettype  =  'cat')","[('tracy', '19'), ('tracy', '19')]",SELECT T1.Fname FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID WHERE T2.PetID IN ( SELECT PetID FROM Pets WHERE PetType = 'dog' ) AND T2.PetID NOT IN ( SELECT PetID FROM Pets WHERE PetType = 'cat' ),,"[('tracy',), ('tracy',)]",1.0,0.5,1.0,"```json
+{
+  ""answer"": [
+    [""Tracy""],
+    [""Susan""]
+  ]
+}
+```",,"[('susan',), ('tracy',)]",0.5,0.25,1.0
+67,pets_1,Find the type and weight of the youngest pet.,"SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1","[('dog', '9.3')]","SELECT PetType, weight FROM Pets ORDER BY pet_age ASC LIMIT 1",,"[('dog', '9.3')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""dog"", ""9.3""]
+  ]
+}
+```",,"[('dog', '9.3')]",1.0,1.0,1.0
+68,pets_1,"What type of pet is the youngest animal, and how much does it weigh?","SELECT pettype ,  weight FROM pets ORDER BY pet_age LIMIT 1","[('dog', '9.3')]","SELECT PetType, weight FROM Pets ORDER BY pet_age ASC LIMIT 1",,"[('dog', '9.3')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""dog"", ""9.3""]
+  ]
+}
+```",,"[('dog', '9.3')]",1.0,1.0,1.0
+69,pets_1,Find the id and weight of all pets whose age is older than 1.,"SELECT petid ,  weight FROM pets WHERE pet_age  >  1","[('2001', '12'), ('2002', '13.4')]","SELECT PetID, weight FROM Pets WHERE pet_age > 1;",,"[('2001', '12'), ('2002', '13.4')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [2001, 12],
+    [2002, 13.4]
+  ]
+}
+```",,"[('2001', '12'), ('2002', '13.4')]",1.0,1.0,1.0
+70,pets_1,What is the id and weight of every pet who is older than 1?,"SELECT petid ,  weight FROM pets WHERE pet_age  >  1","[('2001', '12'), ('2002', '13.4')]","SELECT PetID, weight FROM Pets WHERE pet_age > 1;",,"[('2001', '12'), ('2002', '13.4')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [2001, 12],
+    [2002, 13.4]
+  ]
+}
+```",,"[('2001', '12'), ('2002', '13.4')]",1.0,1.0,1.0
+71,pets_1,Find the average and maximum age for each type of pet.,"SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype","[('1.5', '2', 'dog'), ('3', '3', 'cat')]","SELECT PetType, AVG(pet_age) AS AverageAge, MAX(pet_age) AS MaximumAge FROM Pets GROUP BY PetType;",,"[('cat', '3', '3'), ('dog', '1.5', '2')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""cat"", 3],
+    [""dog"", 2]
+  ]
+}
+```",,"[('cat', '3'), ('dog', '2')]",1.0,0.6666666666666666,1.0
+72,pets_1,What is the average and maximum age for each pet type?,"SELECT avg(pet_age) ,  max(pet_age) ,  pettype FROM pets GROUP BY pettype","[('1.5', '2', 'dog'), ('3', '3', 'cat')]","SELECT PetType, AVG(pet_age) AS AverageAge, MAX(pet_age) AS MaximumAge FROM Pets GROUP BY PetType;",,"[('cat', '3', '3'), ('dog', '1.5', '2')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""cat"", 3],
+    [""dog"", 2]
+  ]
+}
+```",,"[('cat', '3'), ('dog', '2')]",1.0,0.6666666666666666,1.0
+73,pets_1,Find the average weight for each pet type.,"SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype","[('11.35', 'dog'), ('12', 'cat')]","SELECT PetType, AVG(weight) AS AverageWeight FROM Pets GROUP BY PetType;",,"[('cat', '12'), ('dog', '11.35')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""cat"", 12],
+    [""dog"", 11.4]
+  ]
+}
+```",,"[('cat', '12'), ('dog', '11.4')]",0.75,0.75,1.0
+74,pets_1,What is the average weight for each type of pet?,"SELECT avg(weight) ,  pettype FROM pets GROUP BY pettype","[('11.35', 'dog'), ('12', 'cat')]","SELECT PetType, AVG(weight) AS AverageWeight FROM Pets GROUP BY PetType;",,"[('cat', '12'), ('dog', '11.35')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""cat"", 12],
+    [""dog"", 11.4]
+  ]
+}
+```",,"[('cat', '12'), ('dog', '11.4')]",0.75,0.75,1.0
+75,pets_1,Find the first name and age of students who have a pet.,"SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid","[('linda', '18'), ('tracy', '19')]","SELECT T1.Fname, T1.Age FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID",,"[('linda', '18'), ('tracy', '19'), ('tracy', '19')]",0.6666666666666666,1.0,0.6666666666666666,"```json
+{
+  ""answer"": [
+    [""Linda"", 18],
+    [""Tracy"", 19]
+  ]
+}
+```",,"[('linda', '18'), ('tracy', '19')]",1.0,1.0,1.0
+76,pets_1,What are the different first names and ages of the students who do have pets?,"SELECT DISTINCT T1.fname ,  T1.age FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid","[('linda', '18'), ('tracy', '19')]","SELECT DISTINCT T1.Fname ,  T1.Age FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID  =  T2.StuID",,"[('linda', '18'), ('tracy', '19')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Linda"", 18],
+    [""Tracy"", 19]
+  ]
+}
+```",,"[('linda', '18'), ('tracy', '19')]",1.0,1.0,1.0
+77,pets_1,Find the id of the pet owned by student whose last name is ‘Smith’.,SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith',"[('2001',)]",SELECT T2.PetID FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID WHERE T1.LName = 'Smith',,"[('2001',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [2001]
+  ]
+}
+```",,"[('2001',)]",1.0,1.0,1.0
+78,pets_1,What is the id of the pet owned by the student whose last name is 'Smith'?,SELECT T2.petid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid WHERE T1.Lname  =  'Smith',"[('2001',)]",SELECT T2.PetID FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID WHERE T1.LName = 'Smith',,"[('2001',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [2001]
+  ]
+}
+```",,"[('2001',)]",1.0,1.0,1.0
+79,pets_1,Find the number of pets for each student who has any pet and student id.,"SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid","[('1', '1001'), ('2', '1002')]","SELECT StuID, COUNT(PetID) AS NumberOfPets FROM Has_Pet GROUP BY StuID;",,"[('1001', '1'), ('1002', '2')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [1001, 1],
+    [1002, 2]
+  ]
+}
+```",,"[('1001', '1'), ('1002', '2')]",1.0,1.0,1.0
+80,pets_1,"For students who have pets, how many pets does each student have?","SELECT count(*) ,  T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid","[('1', '1001'), ('2', '1002')]","SELECT T1.StuID, COUNT(T2.PetID) AS NumberOfPets FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID = T2.StuID GROUP BY T1.StuID",,"[('1001', '1'), ('1002', '2')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [1001, 1],
+    [1002, 2]
+  ]
+}
+```",,"[('1001', '1'), ('1002', '2')]",1.0,1.0,1.0
+81,pets_1,Find the first name and gender of student who have more than one pet.,"SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1","[('tracy', 'f')]","SELECT T1.Fname ,  T1.Sex FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID  =  T2.StuID GROUP BY T1.StuID HAVING COUNT(*)  >  1",,"[('tracy', 'f')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+82,pets_1,What is the first name and gender of the all the students who have more than one pet?,"SELECT T1.fname ,  T1.sex FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid GROUP BY T1.stuid HAVING count(*)  >  1","[('tracy', 'f')]","SELECT T1.Fname ,  T1.Sex FROM Student AS T1 JOIN Has_Pet AS T2 ON T1.StuID  =  T2.StuID GROUP BY T1.StuID HAVING COUNT(*)  >  1",,"[('tracy', 'f')]",1.0,1.0,1.0,"```json
+{
+  ""answer"": []
+}
+```",,[],0.0,0.0,0.0
+83,pets_1,Find the last name of the student who has a cat that is age 3.,SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat',"[('smith',)]",SELECT T2.LName FROM Has_Pet AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T1.PetID = T3.PetID WHERE T3.PetType = 'cat' AND T3.pet_age = 3,,"[('smith',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Smith""]
+  ]
+}
+```",,"[('smith',)]",1.0,1.0,1.0
+84,pets_1,What is the last name of the student who has a cat that is 3 years old?,SELECT T1.lname FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid JOIN pets AS T3 ON T3.petid  =  T2.petid WHERE T3.pet_age  =  3 AND T3.pettype  =  'cat',"[('smith',)]",SELECT T2.LName FROM Has_Pet AS T1 JOIN Student AS T2 ON T1.StuID = T2.StuID JOIN Pets AS T3 ON T1.PetID = T3.PetID WHERE T3.PetType = 'cat' AND T3.pet_age = 3,,"[('smith',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""Smith""]
+  ]
+}
+```",,"[('smith',)]",1.0,1.0,1.0
+85,pets_1,Find the average age of students who do not have any pet.,SELECT avg(age) FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid),"[('19.625',)]",SELECT AVG(Age) FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet);,,"[('19.625',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""average_age""],
+    [20]
+  ]
+}
+```",,"[('20',), ('average_age',)]",0.0,0.0,0.5
+86,pets_1,What is the average age for all students who do not own any pets?,SELECT avg(age) FROM student WHERE stuid NOT IN (SELECT T1.stuid FROM student AS T1 JOIN has_pet AS T2 ON T1.stuid  =  T2.stuid),"[('19.625',)]",SELECT AVG(Age) FROM Student WHERE StuID NOT IN (SELECT StuID FROM Has_Pet);,,"[('19.625',)]",1.0,1.0,1.0,"```json
+{
+  ""answer"": [
+    [""average_age""],
+    [20]
+  ]
+}
+```",,"[('20',), ('average_age',)]",0.0,0.0,0.5

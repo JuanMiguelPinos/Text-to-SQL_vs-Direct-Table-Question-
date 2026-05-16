@@ -1,0 +1,13 @@
+numpy==1.26.4
+pandas
+scipy
+scikit-learn
+tabulate
+datasets==2.20.0
+transformers==4.44.2
+accelerate==0.33.0
+bitsandbytes==0.45.5
+triton==3.1.0
+tqdm
+regex==2024.7.24
+torch
