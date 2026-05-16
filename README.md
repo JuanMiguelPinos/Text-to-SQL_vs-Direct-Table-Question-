@@ -41,7 +41,7 @@ Both pipelines were evaluated against the ground-truth outputs using Cell Precis
 ├── requirements.txt
 ├── text_to_SQL_vs_direct_table_QA.ipynb
 ├── report/
-│   └── ATICS_PROJECT1.pdf
+│   └── Project_LLM_ATICS1.pdf
 ├── results/
 │   ├── full_results.csv
 │   ├── summary.csv
@@ -64,4 +64,4 @@ The easiest way to reproduce the results is by using the provided Colab notebook
 4. Restart the Colab runtime if prompted.
 5. Run the remaining cells to execute the pipelines.
 
-The script will generate and save all output CSVs inside your designated results directory. For a detailed breakdown of the error analysis and qualitative examples, please check the technical report in `report/ATICS_PROJECT1.pdf`.
+The script will generate and save all output CSVs inside your designated results directory. For a detailed breakdown of the error analysis and qualitative examples, please check the technical report in `report/Project_LLM_ATICS1.pdf`.
