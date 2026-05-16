@@ -39,7 +39,7 @@ Both pipelines were evaluated against the ground-truth outputs using Cell Precis
 .
 ├── README.md
 ├── requirements.txt
-├── ATICS_PROJECT1.ipynb
+├── text_to_SQL_vs_direct_table_QA.ipynb
 ├── report/
 │   └── ATICS_PROJECT1.pdf
 ├── results/
@@ -49,7 +49,7 @@ Both pipelines were evaluated against the ground-truth outputs using Cell Precis
 │   ├── qa_better_cases.csv
 │   └── both_fail_cases.csv
 └── src/
-    └── run_experiments.py
+    └── text_to_SQL_vs_direct_table_QA.py
 
 ```
 
@@ -57,7 +57,7 @@ Both pipelines were evaluated against the ground-truth outputs using Cell Precis
 
 The easiest way to reproduce the results is by using the provided Colab notebook:
 
-1. Open `ATICS_PROJECT1.ipynb` in Google Colab.
+1. Open `text_to_SQL_vs_direct_table_QA.ipynb` in Google Colab.
 2. Mount your Google Drive and ensure the Spider dataset is located at `/content/drive/MyDrive/spider/spider/`.
 3. Run the dependency installation cell (or install via `pip install -r requirements.txt`).
 4. Restart the Colab runtime if prompted.
